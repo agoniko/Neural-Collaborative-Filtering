@@ -17,9 +17,9 @@ from ray.tune import CLIReporter
 from ray.tune.schedulers import ASHAScheduler
 from functools import partial
 
-class NeuMF_parametric_dropout(nn.Module):
+class NeuMF(nn.Module):
     def __init__(self, factor_num, num_users, num_items, layers, dropout):
-        super(NeuMF_parametric_dropout, self).__init__()
+        super(NeuMF, self).__init__()
         self.num_users = num_users
         self.num_items = num_items
         self.factor_num = factor_num
@@ -101,7 +101,7 @@ class NeuMF_parametric_dropout(nn.Module):
 
         return self.mixing_layers(ratings).squeeze()       
     
-class NeuMF(nn.Module):
+"""class NeuMF(nn.Module):
     def __init__(self, factor_num, num_users, num_items, layers):
         super(NeuMF, self).__init__()
         self.num_users = num_users
@@ -185,4 +185,4 @@ class NeuMF(nn.Module):
         # (batch_size, 8) cat (batch_size, 8) -> (batch_size, 16)
         ratings = torch.cat([ratings_gmf, ratings_mlp], dim = 1)
 
-        return self.mixing_layers(ratings).squeeze()       
+        return self.mixing_layers(ratings).squeeze()       """
