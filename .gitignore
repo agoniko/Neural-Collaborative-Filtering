@@ -2,9 +2,5 @@
 /venv
 /checkpoints
 
-/__pycache__/
+/__pycache__
 *.pyc
-
-/models/
-*.pt
-*.csv
