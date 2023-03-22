@@ -3,7 +3,7 @@ import torch.nn as nn
 
 
 class NeuMF(nn.Module):
-    def __init__(self, num_factors, num_users, num_items, layers, dropout):
+    def __init__(self, num_factors, num_users, num_items, layer_sizes, dropout):
         super(NeuMF, self).__init__()
         self.num_users = num_users
         self.num_items = num_items
@@ -25,8 +25,6 @@ class NeuMF(nn.Module):
         )
 
         # MLP component
-        self.layers = layers
-
         self.mlp_user_embed = nn.Sequential(
             nn.Embedding(num_embeddings=self.num_users, embedding_dim=self.num_factors),
             nn.Dropout(p=self.dropout[4]),
@@ -36,7 +34,7 @@ class NeuMF(nn.Module):
             nn.Dropout(p=self.dropout[5]),
         )
         layers = []
-        for in_size, out_size in zip(self.layers[:-1], self.layers[1:]):
+        for in_size, out_size in zip(layer_sizes[:-1], layer_sizes[1:]):
             layers.append(nn.Linear(in_size, out_size))
             layers.append(nn.ReLU())
         layers.pop()
