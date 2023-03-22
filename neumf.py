@@ -34,6 +34,7 @@ class NeuMF(nn.Module):
             nn.Dropout(p=self.dropout[5]),
         )
         layers = []
+        layers.append(nn.Linear(self.num_factors * 2, layer_sizes[0]))
         for in_size, out_size in zip(layer_sizes[:-1], layer_sizes[1:]):
             layers.append(nn.Linear(in_size, out_size))
             layers.append(nn.ReLU())
