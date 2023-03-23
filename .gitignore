@@ -1,7 +1,5 @@
 /.ipynb_checkpoints
 /venv
 /checkpoints
-/models
-
 /__pycache__
 *.pyc

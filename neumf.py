@@ -8,7 +8,6 @@ class NeuMF(nn.Module):
         self.num_users = num_users
         self.num_items = num_items
         self.num_factors = num_factors
-        self.test = 8
         self.dropout = dropout
 
         # GMF component
