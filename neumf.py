@@ -3,38 +3,38 @@ import torch.nn as nn
 
 
 class NeuMF(nn.Module):
-    def __init__(self, factor_num, num_users, num_items, layer_sizes, dropout):
+    def __init__(self, num_factors, num_users, num_items, layer_sizes, dropout):
         super(NeuMF, self).__init__()
         self.num_users = num_users
         self.num_items = num_items
-        self.factor_num = factor_num
+        self.num_factors = num_factors
         self.test = 8
         self.dropout = dropout
 
         # GMF component
         self.gmf_user_embed = nn.Sequential(
-            nn.Embedding(num_embeddings=self.num_users, embedding_dim=self.factor_num),
+            nn.Embedding(num_embeddings=self.num_users, embedding_dim=self.num_factors),
             nn.Dropout(p=self.dropout[2]),
         )
         self.gmf_item_embed = nn.Sequential(
-            nn.Embedding(num_embeddings=self.num_items, embedding_dim=self.factor_num),
+            nn.Embedding(num_embeddings=self.num_items, embedding_dim=self.num_factors),
             nn.Dropout(p=self.dropout[3]),
         )
         self.gmf_affine = nn.Linear(
-            in_features=self.factor_num, out_features=8, bias=False
+            in_features=self.num_factors, out_features=8, bias=False
         )
 
         # MLP component
         self.mlp_user_embed = nn.Sequential(
-            nn.Embedding(num_embeddings=self.num_users, embedding_dim=self.factor_num),
+            nn.Embedding(num_embeddings=self.num_users, embedding_dim=self.num_factors),
             nn.Dropout(p=self.dropout[4]),
         )
         self.mlp_item_embed = nn.Sequential(
-            nn.Embedding(num_embeddings=self.num_items, embedding_dim=self.factor_num),
+            nn.Embedding(num_embeddings=self.num_items, embedding_dim=self.num_factors),
             nn.Dropout(p=self.dropout[5]),
         )
         layers = []
-        layers.append(nn.Linear(self.factor_num * 2, layer_sizes[0]))
+        layers.append(nn.Linear(self.num_factors * 2, layer_sizes[0]))
         for in_size, out_size in zip(layer_sizes[:-1], layer_sizes[1:]):
             layers.append(nn.Linear(in_size, out_size))
             layers.append(nn.ReLU())
