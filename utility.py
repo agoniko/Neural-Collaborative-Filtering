@@ -178,6 +178,7 @@ class GMF(nn.Module):
         logits = self.affine_output(element_product)
         rating = self.logistic(logits)
         return rating.squeeze()
+    
 class MLP(nn.Module):
     def __init__(self, num_users, num_items, args):
         super(MLP, self).__init__()
